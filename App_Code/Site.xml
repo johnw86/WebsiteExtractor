@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Define the pages and folders for export -->
+<site>
+  <page Name="Index">index.cshtml</page>
+  <page Name="Home">home.cshtml</page>
+  <page Name="About">about.cshtml</page>
+  <folder>css</folder>
+  <folder>js</folder>
+  <folder>images</folder>
+</site>
