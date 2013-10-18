@@ -31,6 +31,9 @@ public static class WebsiteExtractor
                 Uri uri = new Uri(HttpContext.Current.Request.Url.ToString());
                 var sitePath = uri.GetLeftPart(UriPartial.Authority) + "/";
 
+                //Set close tag options for html agility pack
+                HtmlNode.ElementsFlags["option"] = HtmlElementFlag.Closed;
+
                 foreach (var page in pageElements)
                 {
                     string pagePath = sitePath + page.Value;
@@ -53,8 +56,16 @@ public static class WebsiteExtractor
                         }
                     }
 
-                    File.WriteAllText(exportFolderPath + newFileName, htmlDoc.DocumentNode.OuterHtml);
+                    htmlDoc.Save(exportFolderPath + newFileName);
                 }
+            }
+
+            //Custom files required
+            var files = siteConfig.Descendants("file");
+            foreach (var file in files)
+            {
+                var filePath = HttpContext.Current.Server.MapPath(@"/" + file.Value);
+                File.Copy(filePath, exportFolderPath + file.Value);
             }
 
             //Copy all our folders we need
